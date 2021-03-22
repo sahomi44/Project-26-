@@ -1,57 +1,50 @@
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Body = Matter.Body;
 
-var engine, world;
-var box1, pig1;
+var wall1,wall3,wall2;
+var ground,paper;
 
-function setup(){
-    var canvas = createCanvas(1200,400);
-    engine = Engine.create();
-    world = engine.world;
+function prelode(){
+  Imege = loadImege("paper.png")
 
+}
+function setup() {
+	var canvas = createCanvas(800,600);
+	engine = Engine.create();
+	world = engine.world;
+
+  	paper = new Paper(100,400,15);
+
+  	wall1 = new Wall(500,430,20,100);
+    wall2 = new Wall(710,430,20,100);
+    wall3 = new Wall(600,470,200,20);
+
+    ground = new Ground(400,480,800,10);
     
-    ground = new Ground(600,height,1200,20)
-
-    box1 = new Box(700,320,70,70);
-    box2 = new Box(920,320,70,70);
-    pig1 = new Pig(810, 350);
-    log1 = new Log(810,260,300, PI/2);
-
-    box3 = new Box(700,240,70,70);
-    box4 = new Box(920,240,70,70);
-    pig3 = new Pig(810, 220);
-
-    log3 =  new Log(810,180,300, PI/2);
-
-    box5 = new Box(810,160,70,70);
-    log4 = new Log(760,120,150, PI/7);
-    log5 = new Log(870,120,150, -PI/7);
-
-    bird = new Bird(100,100);
-
+	Engine.run(engine);
+  
 }
 
-function draw(){
-    background(0);
-    Engine.update(engine);
-    console.log(box2.body.position.x);
-    console.log(box2.body.position.y);
-    console.log(box2.body.angle);
-    box1.display();
-    box2.display();
-    ground.display();
-    pig1.display();
-    log1.display();
 
-    box3.display();
-    box4.display();
-    pig3.display();
-    log3.display();
+function draw() {
+  background(0);
+  Engine.update(engine);
 
-    box5.display();
-    log4.display();
-    log5.display();
+  paper.display();
+  wall2.display();
+  wall3.display();
+  wall1.display();
+  ground.display();
 
-    bird.display();
+  
 }
+
+function keyPressed() {
+
+if(keyCode === UP_ARROW){
+	Matter.Body.applyForce(paper.body,paper.body.position,{x:32,y:-33})
+	
+	   }
+	 }
