@@ -1,50 +1,48 @@
-const Engine = Matter.Engine;
-const World = Matter.World;
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
+var database;
+var back_img;
+var gameState =0;
+var playerCount = 0;
+var allPlayers;
 
-var wall1,wall3,wall2;
-var ground,paper;
+var player, form, game;
+var player1,player2;
+var players;
+var fruits;
+var fruitGroup;
+var fruit1_img, fruit2_img, fruit3_img, fruit4_img, fruit5_img;
+var player_img;
 
-function prelode(){
-  Imege = loadImege("paper.png")
 
+function preload(){
+  back_img = loadImage("images/jungle.jpg");
+  player_img = loadImage("images/basket2.png");
+  fruit1_img = loadImage("images/apple2.png");
+  fruit2_img = loadImage("images/banana2.png");
+  fruit3_img = loadImage("images/melon2.png");
+  fruit4_img = loadImage("images/orange2.png");
+  fruit5_img = loadImage("images/pineapple2.png");
+  fruitGroup = new Group();
 }
 function setup() {
-	var canvas = createCanvas(800,600);
-	engine = Engine.create();
-	world = engine.world;
-
-  	paper = new Paper(100,400,15);
-
-  	wall1 = new Wall(500,430,20,100);
-    wall2 = new Wall(710,430,20,100);
-    wall3 = new Wall(600,470,200,20);
-
-    ground = new Ground(400,480,800,10);
-    
-	Engine.run(engine);
+  createCanvas(1000, 600);
+  database = firebase.database();
+  game = new Game();
+  game.getState();
+  game.start();
   
 }
 
 
-function draw() {
-  background(0);
-  Engine.update(engine);
-
-  paper.display();
-  wall2.display();
-  wall3.display();
-  wall1.display();
-  ground.display();
-
-  
+function draw(){
+  background(back_img);
+  if(playerCount === 2){
+    game.update(1);
+  }
+  if(gameState === 1){
+    clear();
+    game.play();
+  }
+  if(gameState === 2){
+    game.end();
+  }
 }
-
-function keyPressed() {
-
-if(keyCode === UP_ARROW){
-	Matter.Body.applyForce(paper.body,paper.body.position,{x:32,y:-33})
-	
-	   }
-	 }
